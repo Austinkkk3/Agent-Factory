@@ -8,7 +8,6 @@ I am building a **multi-agent AI system** from scratch on IBM watsonx Orchestrat
 
 The identical system is built in parallel on the **Claude Agent SDK** for an objective, apples-to-apples platform comparison.
 
-Final deliverable: a **screen-recorded demo video** that speaks for itself. No slides, no decks.
 
 ---
 
