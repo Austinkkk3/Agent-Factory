@@ -1,4 +1,4 @@
-# Agent Factory — Manager Brief
+# Agent Factory 
 
 ---
 
