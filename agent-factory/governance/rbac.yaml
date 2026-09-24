@@ -1,0 +1,58 @@
+spec_version: v1
+kind: knowledge_base
+name: ap_rbac
+description: RBAC role definitions and access control matrix for AP Invoice system
+
+roles:
+  ap_processor:
+    description: Standard AP staff — can process invoices within tolerance
+    permitted_agents:
+      - invoice_intake_validation
+      - three_way_match
+    permitted_tools:
+      - po_lookup
+      - goods_receipt_lookup
+      - duplicate_anomaly_detector
+      - pii_redact
+      - injection_filter
+      - scope_filter
+
+  ap_manager:
+    description: AP Manager — can approve invoices up to $10,000
+    permitted_agents:
+      - invoice_intake_validation
+      - three_way_match
+      - approval_posting_router
+    permitted_tools:
+      - po_lookup
+      - goods_receipt_lookup
+      - duplicate_anomaly_detector
+      - policy_tolerance_check
+      - erp_post
+      - notify_escalate
+      - pii_redact
+      - injection_filter
+      - scope_filter
+
+  ap_fraud_analyst:
+    description: Fraud analyst — can access triage and vendor master data
+    permitted_agents:
+      - invoice_intake_validation
+      - three_way_match
+      - exception_fraud_triage
+    permitted_tools:
+      - po_lookup
+      - goods_receipt_lookup
+      - duplicate_anomaly_detector
+      - vendor_master_lookup
+      - policy_tolerance_check
+      - notify_escalate
+      - pii_redact
+      - injection_filter
+      - scope_filter
+      - output_schema_validator
+
+  ap_admin:
+    description: Full access — all agents and tools
+    permitted_agents: ["*"]
+    permitted_tools: ["*"]

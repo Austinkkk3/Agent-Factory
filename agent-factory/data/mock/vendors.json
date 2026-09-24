@@ -1,0 +1,26 @@
+{
+  "V-001": {
+    "vendor_id": "V-001",
+    "name": "Acme Supplies Ltd",
+    "payment_terms": "Net-30",
+    "risk_flag": false,
+    "bank_account_changed": false,
+    "avg_invoice_amount": 5000.00
+  },
+  "V-002": {
+    "vendor_id": "V-002",
+    "name": "Global Parts Inc",
+    "payment_terms": "Net-45",
+    "risk_flag": false,
+    "bank_account_changed": false,
+    "avg_invoice_amount": 5200.00
+  },
+  "V-099": {
+    "vendor_id": "V-099",
+    "name": "Phantom Vendor Co",
+    "payment_terms": "Net-15",
+    "risk_flag": true,
+    "bank_account_changed": true,
+    "avg_invoice_amount": 4500.00
+  }
+}

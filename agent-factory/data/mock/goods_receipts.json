@@ -1,0 +1,17 @@
+{
+  "PO-5001": {
+    "po_number": "PO-5001",
+    "received_lines": [{"item": "SKU-A", "qty_received": 10, "date": "2024-01-10"}],
+    "status": "complete"
+  },
+  "PO-5002": {
+    "po_number": "PO-5002",
+    "received_lines": [{"item": "SKU-B", "qty_received": 20, "date": "2024-01-12"}],
+    "status": "complete"
+  },
+  "PO-5099": {
+    "po_number": "PO-5099",
+    "received_lines": [{"item": "SKU-Z", "qty_received": 100, "date": "2024-01-14"}],
+    "status": "complete"
+  }
+}

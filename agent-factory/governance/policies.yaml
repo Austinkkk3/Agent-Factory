@@ -1,0 +1,57 @@
+spec_version: v1
+
+policies:
+  - id: AP-GOV-001
+    name: PII Protection Policy
+    description: All invoice inputs must be scanned for PII before reaching any LLM agent
+    enforcement_mechanism: pii_redact tool called on every invoice input
+    audit_log_field: guardrail_pii_redacted
+    evidence: >
+      Each agent invocation log includes guardrail_pii_redacted=true/false.
+      If true, the redacted_text field shows the sanitized input.
+
+  - id: AP-GOV-002
+    name: Prompt Injection Prevention Policy
+    description: All inputs must pass injection_filter before being processed
+    enforcement_mechanism: injection_filter tool called on every free-text input
+    audit_log_field: guardrail_injection_blocked
+    evidence: >
+      If injection_filter returns blocked=true, the request is terminated
+      and audit_event=GUARDRAIL_INJECTION_BLOCK is logged.
+
+  - id: AP-GOV-003
+    name: Human-in-the-Loop Mandatory Approval Policy
+    description: Any invoice above $10,000 or with fraud_escalate disposition requires human sign-off
+    enforcement_mechanism: approval_posting_router checks amount and disposition before calling erp_post
+    audit_log_field: hitl_triggered
+    threshold: 10000
+    evidence: >
+      audit log field hitl_triggered=true proves the HITL gate fired.
+      notify_escalate call record shows the assignee who received the approval request.
+
+  - id: AP-GOV-004
+    name: Fraud Escalation Policy
+    description: Invoices with 2+ fraud indicators must be routed to ap_fraud_analyst and vp_finance
+    enforcement_mechanism: exception_fraud_triage counts fraud indicators and sets disposition=fraud_escalate
+    audit_log_field: fraud_indicators_count
+    evidence: >
+      triage response includes fraud_indicators list and disposition=fraud_escalate.
+      notify_escalate is called with assignee=ap_fraud_analyst.
+
+  - id: AP-GOV-005
+    name: Deny-by-Default Tool Access Policy
+    description: No agent may call a tool unless it is explicitly listed in its tools array
+    enforcement_mechanism: ADK agent YAML tools list — agents cannot call unlisted tools
+    audit_log_field: tool_calls
+    evidence: >
+      Each tool_call in the trace includes the agent name and tool name.
+      Any call to an unlisted tool is rejected by the ADK runtime.
+
+  - id: AP-GOV-006
+    name: Zero Hardcoded Credentials Policy
+    description: No API keys, passwords, or secrets may appear in the repository
+    enforcement_mechanism: All secrets use # VAULT: <path> placeholders in .env.example
+    audit_log_field: n/a
+    evidence: >
+      git grep -r "api_key\s*=\s*['\"][^$#]" shows zero matches.
+      .env file is gitignored and never committed.

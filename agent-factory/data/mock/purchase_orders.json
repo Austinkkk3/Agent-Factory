@@ -1,0 +1,23 @@
+{
+  "PO-5001": {
+    "po_number": "PO-5001",
+    "vendor_id": "V-001",
+    "lines": [{"item": "SKU-A", "qty": 10, "unit_price": 480.00}],
+    "total": 4800.00,
+    "status": "open"
+  },
+  "PO-5002": {
+    "po_number": "PO-5002",
+    "vendor_id": "V-002",
+    "lines": [{"item": "SKU-B", "qty": 20, "unit_price": 250.00}],
+    "total": 5000.00,
+    "status": "open"
+  },
+  "PO-5099": {
+    "po_number": "PO-5099",
+    "vendor_id": "V-099",
+    "lines": [{"item": "SKU-Z", "qty": 100, "unit_price": 430.00}],
+    "total": 43000.00,
+    "status": "open"
+  }
+}

@@ -1,0 +1,75 @@
+spec_version: v1
+
+registry:
+  agents:
+    - name: ap_orchestrator
+      kind: native
+      model: watsonx/ibm/granite-3-3-8b-instruct
+      role: supervisor
+      collaborators: [exception_fraud_triage, approval_posting_router]
+      policies: [AP-GOV-001, AP-GOV-002, AP-GOV-003, AP-GOV-004, AP-GOV-005]
+
+    - name: exception_fraud_triage
+      kind: native
+      model: watsonx/ibm/granite-3-3-8b-instruct
+      role: fraud_analyst_agent
+      tools: [vendor_master_lookup, policy_tolerance_check, notify_escalate]
+      knowledge_bases: [ap_policy_kb]
+      policies: [AP-GOV-001, AP-GOV-004, AP-GOV-005]
+
+    - name: approval_posting_router
+      kind: native
+      model: watsonx/ibm/granite-3-3-8b-instruct
+      role: approval_agent
+      tools: [policy_tolerance_check, erp_post, notify_escalate]
+      policies: [AP-GOV-003, AP-GOV-005]
+
+  tools:
+    - name: po_lookup
+      kind: python
+      min_role: ap_processor
+
+    - name: goods_receipt_lookup
+      kind: python
+      min_role: ap_processor
+
+    - name: vendor_master_lookup
+      kind: python
+      min_role: ap_fraud_analyst
+
+    - name: duplicate_anomaly_detector
+      kind: python
+      min_role: ap_processor
+
+    - name: policy_tolerance_check
+      kind: python
+      min_role: ap_manager
+
+    - name: erp_post
+      kind: python
+      min_role: ap_manager
+
+    - name: notify_escalate
+      kind: python
+      min_role: ap_manager
+
+    - name: pii_redact
+      kind: python
+      min_role: ap_processor
+
+    - name: injection_filter
+      kind: python
+      min_role: ap_processor
+
+    - name: scope_filter
+      kind: python
+      min_role: ap_processor
+
+    - name: output_schema_validator
+      kind: python
+      min_role: ap_fraud_analyst
+
+  knowledge_bases:
+    - name: ap_policy_kb
+      documents: [ap_policy_manual.txt, tolerance_approval_matrix.txt]
+      accessible_by: [exception_fraud_triage]
