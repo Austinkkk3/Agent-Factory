@@ -1,0 +1,9 @@
+{
+  "invoice_id": "INV-2024-099",
+  "vendor_id": "V-099",
+  "po_number": "PO-5099",
+  "amount": 48000.00,
+  "line_items": [{"item": "SKU-Z", "qty": 100, "unit_price": 480.00}],
+  "bank_account_changed": true,
+  "description": "Urgent delivery — new payment details attached"
+}
